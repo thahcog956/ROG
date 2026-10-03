@@ -116,7 +116,7 @@ const vib=n=>{try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
 const RL=[['Than Hồng','+15% sát thương'],['Giáp Tro','+20 máu tối đa'],['Gió Tàn','+15% tốc đánh'],['Bước Chớp','+1 lần Dash'],['Mắt Quỷ','+10% chí mạng'],['Chân Nhẹ','+10% tốc chạy'],['Hút Hồn','Hồi 2 máu mỗi kẻ hạ'],['Lửa Bám','Đòn đánh gây Bỏng'],['Gai Nhọn','+25% sát thương chí mạng'],['Giáp Xương','+8 giáp'],['Máu Đen','Hồi 0.5 máu/giây'],['Linh Hồn Thương Nhân','+25% vàng nhận'],['Nắm Đấm Choáng','+50% sát thương làm vỡ thế'],['Hơi Thở Cuối','Hồi sinh 1 lần với 40% máu'],['Nhịp Chân','Hồi Dash nhanh hơn 30%'],['Ngọn Lửa Cuối','+40% sát thương khi máu <30%'],['Rune Băng','35%: Làm chậm; 3 lần → Đóng băng'],['Rune Điện','35%: Sốc, đòn lan 30% sang 2 địch'],['Rune Độc','40%: Độc cộng dồn tới 10']];
 const ROOMS=['c','c','v','c','s','r','b'],BI=[['Nghĩa Địa Tro','#463c52','#2b2533','#2f2838','#1a1620'],['Rừng Nấm Độc','#35553a','#1f3320','#233a24','#10190f'],['Thành Chìm','#2a5a73','#17384b','#1b4055','#0b1822'],['Lò Rèn Rực Lửa','#6b2f1c','#3a1d14','#43221a','#1f0f0b'],['Thánh Đường Lặng','#4f4673','#2f2a44','#352f4d','#16131f'],['Trái Tim Tro','#5a1a1e','#2d0d10','#350f12','#1a0608']],BOSS=[['Gorrak, Xương Vương','#e9e1cf'],['Mycelia, Mẹ Nấm','#7ad36b'],['Vael, Kỵ Sĩ Chìm','#4fc3e8'],['Ignar, Thợ Rèn Vô Tận','#ff7a2e'],['Seraphine, Nữ Tế','#f1d98a'],['Vua Tro','#ff4d3d']],CW={a:{F:[[6,4,8],[6,4,8],[8,5,14]],m:[1,1,1.4],d:12,r:38},i:{F:[[10,5,16],[12,6,22]],m:[1,1.5],d:18,r:35}},HC=['#8d7fa3','#7ad36b','#4fc3e8','#ff7a2e','#f1d98a','#ff4d3d'],ED={o:{hp:18,dm:25,sv:.96,r:5,pz:8,c:'#ff9a3c'},g:{hp:30,dm:10,sv:.85,r:6,pz:20,c:'#d8d0c0'},a:{hp:22,dm:8,sv:.69,r:5,pz:12,c:'#7fd58a'},r:{hp:34,dm:12,sv:.75,r:6,pz:24,c:'#e0605a'},w:{hp:10,dm:5,sv:1.1,r:4,pz:0,c:'#c9a0ff'},k:{hp:28,dm:10,sv:.65,r:6,pz:14,c:'#7aa8ff'},h:{hp:50,dm:14,sv:.6,r:7,pz:60,c:'#9aa6b8'},m:{hp:26,dm:6,sv:.6,r:6,pz:14,c:'#7fe08a'},p:{hp:40,dm:14,sv:0,r:8,pz:999,c:'#c26a3a'},f:{hp:1,dm:12,sv:.9,r:12,pz:0,c:'#f1d98a'}};
 let CGC=0,CDX=0,LC=0,LPO=null,G=null,P,E=[],PR=[],PA=[],RG=[],FX=[],ST,rc,CL='a',HT=0,LS=(/seed=([A-Z0-9-]{3,20})/.exec(location.hash)||[])[1];
-const rs=()=>Math.random().toString(36).slice(2,6).toUpperCase().padEnd(4,'0');
+const CRK='0123456789ABCDEFGHJKMNPQRSTVWXYZ',rs=()=>{const a=new Uint8Array(4);try{crypto.getRandomValues(a)}catch(e){for(let i=0;i<4;i++)a[i]=Math.random()*256|0}let r='';for(const v of a)r+=CRK[v&31];return r};
 function recalc(){meta();const r=i=>G.rl[i]||0;ST={atk:(hb(0)?.15:0)+1+((MT.atk|0)+(MT.rk|0))/100+.15*r(0)+.25*G.b,as:.15*r(2)+(G.adr>0?.3:0),cr:.05+((G.wp&&G.wp.cr)||0)+.1*r(4)+(MT.cr|0)/100,ms:.1*r(5)+(hb(2)?.1:0)-(hc(1)?.1:0)+(G.adr>0?.3:0),dc:2+r(3),ls:2*r(6),bn:r(7)>0,ic:r(16)>0,ie:r(17)>0,ip:r(18)>0,ar:Math.max(0,(G.cl=='i'?20:0)+8*r(9)+(hb(1)?30:0)-(hc(2)?20:0)),cd:1.5+.25*r(8)+(MT.cd|0)/100,rg:.5*r(10),gd:(1+.25*r(11)+(MT.gd|0)/100+(hb(3)?.25:0))*(hc(3)?.75:1)*(G.tl>0?2:1),pz:1+.5*r(12)+(MT.pz|0)/100,dr:72*(hc(4)?1.25:1)/(1+.3*r(14)+(MT.dr|0)/100),mhp:Math.round(({a:100,r:80,m:70,i:140}[G.cl])*(1+(MT.hp|0)/100)*(hc(0)?.85:1)+20*r(1))}}
 // ---- input ----
 const K={},btn={a:0,q:0,e:0,d:0},buf={a:0,q:0,e:0,d:0},joy={on:0,id:-1,ox:0,oy:0,x:0,y:0,m:0};
@@ -174,8 +174,8 @@ g.fillStyle='#c9c2d1';for(let i=0;i<22;i++)g.fillRect(OX+G.rn()*AW|0,OY+G.rn()*A
 for(const p of G.pl){g.fillStyle=q[1];g.fillRect(p.x,p.y,p.w,p.h);g.fillStyle='#8d7fa3';g.fillRect(p.x,p.y,p.w,3);g.fillStyle=q[4];g.fillRect(p.x,p.y+p.h-3,p.w,3)}return c}
 function spawnWave(){const n=Math.min(mu(4)?18:9,(2+(G.room>>1)+G.wv+G.b)*(mu(4)?2:1)),ks=['g'];if(G.room>0||G.b)ks.push('a');if(G.room>1||G.b)ks.push('r');if(G.b)ks.push('o');if(G.room>0||G.b)ks.push('w');if(G.b||G.room>2)ks.push('h');if(G.b||G.room>3)ks.push('k');if(G.b>1||G.room>4)ks.push('m');
 for(let i=0;i<n;i++){let x,y,t=0;do{x=OX+150+G.rn()*180;y=OY+20+G.rn()*150}while(t++<12&&(G.pl.some(p=>x>p.x-14&&x<p.x+p.w+14&&y>p.y-14&&y<p.y+p.h+14)||hyp(x-P.x,y-P.y)<90));spw(ks[G.rn()*ks.length|0],x,y)}if(G.ty=='e'&&!G.wv)mkElite(1);else if(G.ty=='c'&&!G.wv){if(HM(2)&&G.room>=3&&G.rn()<.15)mkElite(1);else if(HM(17)&&G.rn()<.1)mkElite(0)}}
-function mkElite(a){mk(['r','o','a','h','k'][G.rn()*5|0],OX+AW-60,DY);const q=E[E.length-1];q.hp*=3.2;q.mhp=q.hp;q.dm*=1.35;q.r+=3;q.pm*=2;q.pz=q.pm;q.el=1;q.af=a?pickAf(q):[]}
-function mk(k,x,y){const d=ED[k],s=(1+.1*G.room)*Math.pow(1.45,G.b)*(HM(1)?1.1:1)*(mu(4)?.6:1)*(hc(6)?1.15:1)*(G.tl>0?1.25:1);E.push({k,x,y,r:d.r,hp:d.hp*s,mhp:d.hp*s,dm:d.dm*(1+.05*G.room)*(1+.25*G.b)*(HM(12)?1.2:1),sv:d.sv*(hc(5)?1.1:1),pz:d.pz,pm:d.pz,st:0,tm:0,cd:50+G.rn()*40|0,sw:40,fl:0,stun:0,bn:0,bd:0,c:d.c,fa:0,hit:0,tl:null,sg:G.rn()<.5?1:-1})}
+function mkElite(a){mk(['r','o','a','h','k'][G.rn()*5|0],OX+AW-60,DY);const q=E[E.length-1];const sc=Math.pow(1.45,G.b)*(HM(1)?1.1:1)*(mu(4)?.6:1)*(hc(6)?1.15:1)*(G.tl>0?1.25:1);q.hp=q.mhp=160*sc;q.dm=16*(1+.22*G.b)*(HM(12)?1.2:1);q.r=9;q.pm=q.pz=100;q.el=1;q.af=a?pickAf(q):[]}
+function mk(k,x,y){const d=ED[k],s=Math.pow(1.45,G.b)*(HM(1)?1.1:1)*(mu(4)?.6:1)*(hc(6)?1.15:1)*(G.tl>0?1.25:1);E.push({k,x,y,r:d.r,hp:d.hp*s,mhp:d.hp*s,dm:d.dm*(1+.22*G.b)*(HM(12)?1.2:1),sv:d.sv*(hc(5)?1.1:1),pz:d.pz,pm:d.pz,st:0,tm:0,cd:50+G.rn()*40|0,sw:40,fl:0,stun:0,bn:0,bd:0,c:d.c,fa:0,hit:0,tl:null,sg:G.rn()<.5?1:-1})}
 function mv(o,dx,dy){const r=o.r;let x=o.x+dx,y=o.y+dy,w=0;const a=OX+r,b=OX+AW-r,c=OY+r,d=OY+AH-r;if(x<a){x=a;w=1}if(x>b){x=b;w=1}if(y<c){y=c;w=1}if(y>d){y=d;w=1}
 for(const p of G.pl){const nx=clamp(x,p.x,p.x+p.w),ny=clamp(y,p.y,p.y+p.h),qx=x-nx,qy=y-ny,l=hyp(qx,qy);if(l<r){if(l>.001){x=nx+qx/l*r;y=ny+qy/l*r}else y=p.y-r;w=1}}o.x=x;o.y=y;return w}
 // ---- combat ----
@@ -418,10 +418,7 @@ RL.push(['Bùa Da Sắt','+15 giáp'],['Túi Vàng Thủng','+10% vàng nhận']
 S.x={pa:0,cw:0,dc:0,ab:0,cr:[],ce:'',cb:0};try{const j=JSON.parse(localStorage.getItem(SK)||'{}').x||{};S.x.pa=clamp(j.pa|0,0,99999);S.x.cw=clamp(j.cw|0,0,15);S.x.dc=clamp(j.dc|0,0,99999);S.x.ab=clamp(j.ab|0,0,999);S.x.cb=clamp(j.cb|0,0,63);S.x.cr=Array.isArray(j.cr)?j.cr.filter(x=>Number.isInteger(x)&&x>=0&&x<60).slice(0,60):[];S.x.ce=typeof j.ce=='string'?j.ce.replace(/[^a-z]/g,'').slice(0,16):''}catch(e){}
 const RT={power:['+8% ATK','ATK ×1.10'],vitality:['+15 máu'],crit:['+10% ST chí mạng','+8% chí mạng'],dash:['Hồi Dash −10%'],defense:['+20 giáp'],economy:['+15% vàng']},_rc=recalc;
 recalc=function(){_rc();const r=i=>G.rl[i]||0;ST.ar+=15*r(19);ST.gd*=1+.1*r(20);if(!mu(7))ST.mhp+=12*r(21);ST.cr+=.05*r(22);ST.ms+=.06*r(23);ST.dr*=1-.08*r(24);ST.atk*=1+.1*((G.cl=='a'||G.cl=='i')?r(25):r(26));
-const c={},o=G.res||(G.res={});for(const k in G.rl)if(G.rl[k]>0&&TG[k])c[TG[k]]=(c[TG[k]]||0)+1;
-for(const t in c){const n=c[t],a=n>=3,b=n>=5;if(a){if(t=='power')ST.atk*=1.08;if(t=='vitality'&&!mu(7))ST.mhp+=15;if(t=='crit')ST.cd+=.1;if(t=='dash')ST.dr*=.9;if(t=='defense')ST.ar+=20;if(t=='economy')ST.gd*=1.15}
-if(b){if(t=='power')ST.atk*=1.1;if(t=='crit')ST.cr+=.08}
-const lv=b?2:a?1:0;if(lv>(o[t]|0)){o[t]=lv;if(G.t>0&&RT[t])hint('✦ Cộng Hưởng '+t+' '+(lv>1?'B':'A')+': '+(RT[t][lv-1]||RT[t][0]),200)}}};
+};
 const _rw=reward;reward=function(){if(HM(15)&&G.cu.length<8&&G.rn()<.15){const f=[0,1,2,3,4,5,6,7].filter(i=>!hc(i));if(f.length){G.cu.push(f[G.rn()*f.length|0]);G.gold+=40;recalc();hint('☠ Rương Nguyền: +1 lời nguyền, +◈40',220)}}_rw()};
 const _s2=step;step=function(){_s2();if(G&&G.st=='play'&&HM(16)){const B=E.find(e=>e.k=='B'&&!e.dead);if(B&&!B.cn2&&B.hp<B.mhp*.15){B.cn2=1;B.sv*=1.25;B.cd=Math.min(B.cd,15);hint('🔥 Cuồng Nộ!',120);pt(B.x,B.y,'#ff3b3b',20)}}};
 const _mk=mk;mk=function(k,x,y){_mk(k,x,y);if(HM(20)&&k!='B'&&k!='p'&&k!='f'){const q=E[E.length-1],a=Object.keys(NM).filter(z=>z!='vo'&&z!='sp');if(q&&!q.af){const t=a[G.rn()*a.length|0];q.af=[t];if(t=='sw')q.sv*=1.35}}}}
@@ -627,7 +624,7 @@ const _mkx=mk;mk=function(k,x,y){_mkx(k,x,y);const q=E[E.length-1];if(q&&q.af&&q
 const _dmb=dmgE;dmgE=function(e,...a){if(!(e.bar>0))return _dmb(e,...a);const h=e.hp,b=e.bar;e.hp=h+b;_dmb(e,...a);const l=h+b-e.hp;if(l<=b&&!e.dead){e.bar=b-l;e.hp=h}else if(l>b)e.bar=0};
 const _dbx=dE;dE=function(e){_dbx(e);if(e.bar>0&&!(e.hid>0)){X.fillStyle='#7fd8ff';X.fillRect(e.x-8,e.y-e.r*1.3-11,16*Math.min(1,e.bar/e.mhp),2)}};
 const _kk=kill;kill=function(e){const w=e.dead;_kk(e);if(!w&&G.ev&&G.ev.includes(3)){P.dc=ST.dc;P.dr=0}};
-const _rk=recalc;recalc=function(){_rk();if(!G)return;ST.atk*=1+.06*(G.rk|0);const v=G.ev||[];if(v.includes(3))ST.dr=Math.max(20,ST.dr*.85);if(v.includes(4))ST.ar+=20;if(v.includes(5))ST.atk*=1+Math.min(.3,ST.ar*.01)};
+const _rk=recalc;recalc=function(){_rk();if(!G)return;ST.atk*=1+.12*(G.rk|0);const v=G.ev||[];if(v.includes(3))ST.dr=Math.max(20,ST.dr*.85);if(v.includes(4))ST.ar+=20;if(v.includes(5))ST.atk*=1+Math.min(.3,ST.ar*.01)};
 const _sx=step;step=function(){_sx();if(G&&G.st=='play'){if(G.sm&&G.sm.t>0)G.sm.t--;if(G.lu&&G.lu.t>0)G.lu.t--;if(G.mr>0)G.mr--}};
 const _s3=startRoom;startRoom=function(i,o){_s3(i,o);G.sm=G.lu=null;G.mr=0;G.fm=Math.max(0,(HM(10)?1:2)-(hc(7)?1:0));if(G.fl>G.fm)G.fl=G.fm;if(G.mp>0){for(const d of G.dr)if(d.t=='c')d.rw='r';if(G.ty=='c'||G.ty=='e')G.mp--}};
 const _rd=render;render=function(){_rd();if(!G||!G.bg)return;X.setTransform(1,0,0,1,0,0);if(G.sm&&G.sm.t>0){X.globalAlpha=.3;X.fillStyle='#cfd8e6';X.beginPath();X.arc(G.sm.x,G.sm.y,G.sm.r,0,7);X.fill()}if(G.lu&&G.lu.t>0){X.globalAlpha=1;X.fillStyle='#ffd23b';X.fillRect(G.lu.x-3,G.lu.y-6,6,9)}if(G.mr>0){X.globalAlpha=.5;X.strokeStyle='#cfe8ff';X.beginPath();X.arc(P.x,P.y,10,0,7);X.stroke()}X.globalAlpha=1}}
@@ -845,7 +842,7 @@ const _r=render;render=function(){_r();if(!G||!G.bg)return;X.setTransform(1,0,0,
 const TG={fire:[7,29,39,45,56],frost:[16,30,43,54],volt:[17,31,40,57],venom:[18,32,38],void:[33,49],crit:[4,8,22,41,44],dash:[3,14,24,46,55,58],defense:[9,19,37,42,59],parry:[27,47,53],economy:[11,20,36,51,52],vitality:[1,10,21,48],melee:[12,25],projectile:[26],aoe:[35,45],power:[0,15,28],skill:[34,50]};
 const NM={fire:'🔥 Lửa',frost:'❄ Băng',volt:'⚡ Sét',venom:'☠ Độc',void:'◐ Hư Không',crit:'✦ Chí mạng',dash:'💨 Dash',defense:'🛡 Phòng thủ',parry:'⚔ Parry',economy:'💰 Kinh tế',vitality:'❤ Sinh lực',melee:'🗡 Cận chiến',projectile:'➶ Đạn',aoe:'💥 Diện rộng',power:'⚡ Sức mạnh',skill:'✨ Kỹ năng'};
 const BN={fire:[s=>s.atk+=.05,s=>s.atk+=.05],frost:[s=>s.as+=.04,s=>s.ms+=.03],volt:[s=>s.as+=.04,s=>s.atk+=.04],venom:[s=>s.atk+=.05,s=>s.atk+=.05],void:[s=>s.cr+=.03,s=>s.cr+=.04],crit:[s=>s.cd+=.1,s=>s.cr+=.08],dash:[s=>s.dr*=.9,s=>s.ms+=.04],defense:[s=>s.ar+=20,s=>s.mhp+=10],parry:[s=>s.ar+=6,s=>s.ar+=6],economy:[s=>s.gd+=.15,s=>s.gd+=.1],vitality:[s=>s.mhp+=15,s=>s.rg+=.3],melee:[s=>s.atk+=.05,s=>s.pz+=.15],projectile:[s=>s.atk+=.05,s=>s.atk+=.04],aoe:[s=>s.atk+=.04,s=>s.atk+=.04],power:[s=>s.atk+=.08,s=>s.atk+=.1],skill:[s=>s.as+=.03,s=>s.atk+=.05]};
-const _rc=recalc;recalc=function(){_rc.apply(this,arguments);if(!G||!G.rl||typeof ST!='object')return;const cur={},rv=G.rv||(G.rv={});
+const _rc=recalc;recalc=function(){_rc.apply(this,arguments);if(!G||!G.rl||typeof ST!='object')return;const cur={},rv=G.rsv||(G.rsv={});
  for(const t in TG){let n=0;for(const i of TG[t])if(G.rl[i]>0)n++;cur[t]=n;const lv=n>=5?2:n>=3?1:0;if(lv>=1)BN[t][0](ST);if(lv>=2)BN[t][1](ST);if(lv>(rv[t]|0)){rv[t]=lv;try{hint('✨ Cộng hưởng '+NM[t]+(lv>1?' ★★':' ★')+' kích hoạt',110)}catch(e){}}}
  G.res=cur};
 const _p=pause;pause=function(){_p.apply(this,arguments);if(!G||G.st!='pause'||!G.res)return;let h='';
@@ -1322,4 +1319,183 @@ const _opM=opt;opt=function(){_opM.apply(this,arguments);const r=$('#ov .row');i
 <script>
 try{const _fo=fire;fire=function(e){const n=PR.length;_fo(e);for(let k=n;k<PR.length;k++)if(PR[k]&&!PR[k].o)PR[k].o=e}}catch(x){console.error('own',x)}
 </script>
+<style>
+/* ===== Thông tin Class & Kỹ năng ===== */
+.ci{width:100%;max-width:640px;display:flex;flex-direction:column;gap:8px;text-align:left}
+.ci h3{margin:8px 0 0;font-size:11px;font-weight:700;color:var(--ash);letter-spacing:1px;text-transform:uppercase}
+.ct{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.ct .b{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0!important;min-height:52px!important;font-size:11px;padding:4px;width:100%}
+.ct .b .ic{font-size:18px;line-height:1}
+.ct .b.sel{background:#2b2533;background:color-mix(in srgb,var(--ac) 20%,var(--floor));border-color:var(--ac);box-shadow:0 0 10px color-mix(in srgb,var(--ac) 45%,transparent)}
+.cih{border-left:3px solid var(--ac);padding:2px 0 2px 10px}
+.cih h2{display:block;font-size:17px;color:var(--ac);text-align:left;margin:0}
+.cih i{display:block;font-size:12px;color:var(--ash);margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chips span{font-size:11px;background:#14101a;border:1px solid var(--wall);border-radius:12px;padding:2px 8px;color:var(--ink)}
+.chips b{color:var(--ac)}
+.cic{border:1px solid var(--wall);border-left:3px solid var(--ac);background:#14101a;border-radius:6px;padding:7px 10px;font-size:12px;line-height:1.45;color:var(--ink)}
+.cic>b{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px}
+.cic>b em{font-style:normal;color:var(--ash);font-weight:400;font-size:11px;white-space:nowrap}
+.cic.lk{opacity:.55}
+.cic .k{display:inline-block;min-width:20px;text-align:center;background:var(--ac);color:#1a1620;border-radius:4px;font-weight:800;margin-right:6px;padding:0 4px}
+.cic>div{margin-top:3px;color:#cfc8da}
+.cin{font-size:12px;line-height:1.5;color:#cfc8da;background:#14101a;border:1px dashed var(--wall);border-radius:6px;padding:7px 10px}
+.cin b{color:var(--ink)}
+.cib{width:100%;margin-top:2px;border-color:var(--ac,var(--gold))!important}
+.cs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.cs .b{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0!important;min-height:48px!important;font-size:11px;padding:4px;width:100%}
+.cs .b .ic{font-size:17px;line-height:1}
+.cs .b.sel{background:#2b2533;border-color:#ffc247;box-shadow:0 0 10px rgba(255,194,71,.4)}
+.ci .cin{overflow-wrap:anywhere}
+.cic .k{white-space:nowrap}
+</style>
+<script>
+// ---- [GDD §6 Class · §7.2 Vũ khí · §14.2 Chuẩn bị · §18.4 Codex] Thông tin Class & Kỹ năng: màn chi tiết + lối vào ở Chuẩn bị / Codex / Tạm dừng + gợi ý đầu run ----
+(function(){
+const EN=()=>localStorage.getItem('ashbound_lang')=='en',T=(v,e)=>EN()?e:v;
+const AC={a:'#ff7a2e',r:'#5fd1a8',m:'#a35bff',i:'#7aa7ff'},KS=['a','r','m','i'],UW=[0,3,10],UA=[4,8,12];
+const CLS={
+a:{ic:'🔥',n:'Ashblade',role:['Kiếm Sĩ Tro','Ash Swordsman'],tag:['Đọc đòn, phản đòn','Read the attack, punish it'],hp:100,ar:0,sp:'×1.00',pr:1,
+ q:{n:'Cinder Slash',cd:8,v:`Chém quạt 120°, tầm 3.5 ô, ×2.0 sát thương Lửa, làm địch loạng choạng mạnh và gây 1 Burn.`,e:`120° arc slash, 3.5 tiles, ×2.0 Fire damage, heavy stagger, applies 1 Burn.`},
+ e:{n:'Ember Guard',cd:12,v:`Thế thủ 1.2s (di chuyển chậm một nửa). 0.15s đầu là PARRY: đòn ĐỎ/VÀNG trúng đúng lúc → hủy sát thương, địch choáng 1.5s, phản nổ ×1.5 Lửa, +10% Surge, hoàn 50% hồi chiêu. Sau đó chỉ giảm 70% đòn đỏ/vàng. Đòn TÍM không chặn được.`,e:`Guard for 1.2s (half move speed). The first 0.15s is a PARRY: a RED/YELLOW hit landing in that window is negated, the attacker is stunned 1.5s, a ×1.5 Fire counter-blast goes off, +10% Surge, 50% cooldown refunded. After that it only cuts RED/YELLOW hits by 70%. PURPLE attacks cannot be blocked.`},
+ p:{n:'Tàn Lửa Bùng',v:`Tung 3 đòn trúng liên tiếp mà không bị trúng đòn → +15% sát thương trong 4s (mỗi đòn trúng mới làm mới thời gian).`,e:`Land 3 hits in a row without being hit → +15% damage for 4s (each new hit refreshes it).`},
+ tip:[`Chờ vòng báo hiệu VÀNG rồi bấm E đúng lúc đòn chạm tới — Parry vừa tự vệ vừa gây sát thương.`,`Wait for a YELLOW telegraph and press E just as the hit lands — a Parry defends and deals damage.`],
+ as:[['Lửa Bám',`Cinder Slash áp 2 Burn · hồi chiêu +1s`,`Cinder Slash applies 2 Burn · cooldown +1s`],['Gương Tro',`Cửa sổ Parry dài 14 khung · phản nổ chỉ ×1.0`,`Parry window 14 frames (longer) · counter-blast only ×1.0`],['Kiếm Liên',`Nội tại chỉ cần 2 đòn, +25% sát thương · Máu tối đa −10%`,`Passive needs only 2 hits, +25% damage · Max HP −10%`]],
+ w:[['Kiếm Tro',`Cân bằng: quạt 100°, tầm 2.4 ô, combo 3 đòn (đòn cuối ×1.4). Đòn nặng: chém xoay 360°.`,`Balanced: 100° arc, 2.4 tiles, 3-hit combo (finisher ×1.4). Heavy: 360° spin.`],['Song Đao Than',`Nhanh, đánh dày: quạt 80°, tầm 2.0 ô, 3 đòn nhẹ + đòn 4 ×1.6. +10% Crit, chí mạng gây Bleed. Đòn nặng: lao chém 4 ô xuyên địch.`,`Fast and dense: 80° arc, 2.0 tiles, 3 light hits + a ×1.6 fourth. +10% Crit, crits cause Bleed. Heavy: 4-tile piercing dash slash.`],['Doomday Edge',`Chậm mà nặng: quạt 140°, tầm 2.8 ô, combo ×1.0/1.3/1.8. Đòn nặng: đập đất AoE. Đòn thứ 3 gọi sao băng.`,`Slow and heavy: 140° arc, 2.8 tiles, combo ×1.0/1.3/1.8. Heavy: ground slam AoE. The 3rd hit calls a falling star.`]]},
+r:{ic:'🏹',n:'Shadow Archer',role:['Cung Thủ Bóng','Shadow Archer'],tag:['Giữ khoảng cách, hạ nhanh','Keep your distance, kill fast'],hp:80,ar:0,sp:'×1.05',pr:0,
+ q:{n:'Shadow Volley',cd:9,v:`Bắn 5 mũi tên quạt 60°, mỗi mũi ×0.9 sát thương, xuyên 1 địch, tầm 12 ô.`,e:`Fires 5 arrows in a 60° fan, ×0.9 damage each, pierces 1 enemy, 12 tiles range.`},
+ e:{n:'Vanish Roll',cd:10,v:`Lăn 3.5 ô, bất tử trong lúc lăn, rồi tàng hình 1s (địch mất mục tiêu). Phát bắn kế trong 1s chắc chắn chí mạng. Không tốn lượt Dash.`,e:`Roll 3.5 tiles, invulnerable mid-roll, then invisible for 1s (enemies lose their target). Your next shot within 1s is a guaranteed crit. Costs no Dash charge.`},
+ p:{n:'Săn Mồi',v:`+30% sát thương lên mục tiêu cách xa hơn 6 ô.`,e:`+30% damage against targets farther than 6 tiles.`},
+ tip:[`Giữ khoảng cách trên 6 ô, bị áp sát thì lăn bằng E rồi bắn ngay để ăn chí mạng.`,`Stay beyond 6 tiles; when rushed, roll with E and shoot right away for the guaranteed crit.`],
+ as:[['Mưa Tên',`Volley bắn 7 mũi, quạt 90°, mỗi mũi ×0.7`,`Volley fires 7 arrows in a 90° fan, ×0.7 each`],['Bóng Đêm',`Vanish kéo dài 1.6s · phát bắn kế +50% sát thương chí mạng (thay vì chắc chí mạng)`,`Vanish lasts 1.6s · next shot +50% crit damage (instead of a guaranteed crit)`],['Thợ Săn',`Săn Mồi: ngưỡng chỉ cần >4 ô, bonus +20%`,`Prey Hunter: range only >4 tiles, bonus +20%`]],
+ w:[['Cung Bóng',`Bắn đơn, tầm 11 ô. Đòn nặng: tích lực, mũi tên xuyên vô hạn ×2.6.`,`Single shots, 11 tiles range. Heavy: charged arrow that pierces everything, ×2.6.`],['Nỏ Liên Châu',`Bắn loạt 3 phát, xuyên 1, rồi nạp lại. Đòn nặng: quạt 5 bolt.`,`3-bolt bursts, pierces 1, then reloads. Heavy: 5-bolt fan.`],['Sao Rơi',`Như Cung Bóng; mũi tên tách 3 mũi con (50% sát thương) khi chạm tường hoặc hết tầm.`,`Like the Shadow Bow; arrows split into 3 child arrows (50% damage) on hitting a wall or max range.`]]},
+m:{ic:'🔮',n:'Cinder Mage',role:['Pháp Sư Tàn Lửa','Cinder Mage'],tag:['Đại bác thủy tinh','Glass cannon'],hp:70,ar:0,sp:'×1.00',pr:0,
+ q:{n:'Meteor',cd:12,v:`Đánh dấu vòng r=3 ô tại điểm nhắm, sau 1s nổ ×3.0 sát thương Lửa và để lại vùng cháy 3s. Heat +30.`,e:`Marks a 3-tile radius at the aim point; after 1s it explodes for ×3.0 Fire and leaves a burning zone for 3s. Heat +30.`},
+ e:{n:'Frost Nova',cd:10,v:`Sóng băng r=4 ô quanh người: ×1.0 sát thương Băng, 2 Chill cho mọi địch, đẩy lùi 1 ô. Heat −25.`,e:`Frost wave, 4-tile radius around you: ×1.0 Frost damage, 2 Chill to every enemy, 1-tile knockback. Heat −25.`},
+ p:{n:'Cân Bằng Nhiệt',v:`Thanh Heat 0–100, tự giảm 5/s. Heat 70–99 = Blaze: +25% sát thương Lửa. Chạm 100 = Overheat: khóa mọi đòn đánh và kỹ năng 2s, nhận +20% sát thương, rồi Heat về 40.`,e:`Heat bar 0–100, drains 5/s. Heat 70–99 = Blaze: +25% Fire damage. Hitting 100 = Overheat: all attacks and skills locked for 2s, you take +20% damage, then Heat drops to 40.`},
+ tip:[`Meteor làm tăng Heat, Frost Nova làm giảm Heat — dùng Nova để hạ nhiệt trước khi chạm 100.`,`Meteor raises Heat, Frost Nova lowers it — use Nova to cool down before you hit 100.`],
+ as:[['Sao Băng Kép',`Meteor nổ 2 lần ×2.0 · hồi chiêu +2s`,`Meteor explodes twice at ×2.0 · cooldown +2s`],['Băng Cực',`Frost Nova r=5 ô, 3 Chill (đóng băng ngay) · hồi chiêu +3s · Heat −35`,`Frost Nova 5-tile radius, 3 Chill (instant freeze) · cooldown +3s · Heat −35`],['Nhiệt Kế Vỡ',`Quá nhiệt ở 120 (Blaze từ 60) · bị khóa 3s`,`Overheat at 120 (Blaze from 60) · locked for 3s`]],
+ w:[['Gậy Tro',`Cầu lửa, tầm 10 ô. Đòn nặng: cầu nổ AoE r=2.5 ô ×2.2.`,`Fireball, 10 tiles range. Heavy: exploding orb, 2.5-tile AoE, ×2.2.`],['Sách Cháy',`3 tia lửa tự dẫn hướng, tầm 8 ô, sát thương thấp mỗi tia. Đòn nặng: Trận Pháp gây sát thương liên tục 3s.`,`3 homing fire rays, 8 tiles range, low damage each. Heavy: a spell circle dealing damage over 3s.`],['Trượng Lưu Tinh',`Như Gậy Tro có đuôi lửa; phát thứ 4 gọi thiên thạch r=2 ô ×1.8.`,`Like the Ash Staff with a fire trail; every 4th shot calls a 2-tile meteor at ×1.8.`]]},
+i:{ic:'🛡️',n:'Ironwarden',role:['Hộ Vệ Thép','Steel Warden'],tag:['Tường thành di động','Walking fortress'],hp:140,ar:20,sp:'×0.92',pr:1,
+ q:{n:'Shield Bash',cd:9,v:`Lao 5 ô, không bị đánh gãy khi đang lao; địch trúng đầu tiên choáng 1.2s, ×1.5 sát thương.`,e:`Charge 5 tiles without being staggered; the first enemy hit is stunned 1.2s, ×1.5 damage.`},
+ e:{n:'Bulwark',cd:14,v:`Dựng khiên 2.5s, chặn nón trước 150°: đòn ĐỎ/VÀNG từ phía trước = 0 sát thương (TÍM không chặn). 0.15s đầu là Parry (choáng 1.5s, +10% Surge). Sát thương chặn được sẽ được tích lại; khi hết giờ hoặc bấm E lần nữa → sóng xung kích r=3 ô gây 1.5× lượng đã tích (có trần), đẩy lùi 2 ô. Hồi chiêu tính từ lúc kết thúc.`,e:`Raise the shield for 2.5s, blocking a 150° front cone: RED/YELLOW hits from the front deal 0 damage (PURPLE cannot be blocked). The first 0.15s is a Parry (1.5s stun, +10% Surge). Blocked damage is stored; when time runs out or you press E again → a 3-tile shockwave deals 1.5× the stored damage (capped) and knocks back 2 tiles. Cooldown starts when it ends.`},
+ p:{n:'Da Thép',v:`+20 giáp; miễn hất lùi khi đang tung đòn.`,e:`+20 armor; immune to knockback while attacking.`},
+ tip:[`Đứng chắn trước đòn mạnh rồi thả E để trả lại toàn bộ sát thương đã hứng.`,`Stand in front of a big hit, then release E to return all the damage you absorbed.`],
+ as:[['Mũi Khiên',`Bash lao 7 ô · hồi chiêu 7s · choáng giảm còn 0.8s`,`Bash charges 7 tiles · cooldown 7s · stun reduced to 0.8s`],['Thành Trì',`Bulwark 3.5s (không thả sớm được) · trần xung kích +50%`,`Bulwark 3.5s (cannot be released early) · shockwave cap +50%`],['Phản Giáp',`+35 giáp · tốc chạy −5% · Bulwark phản đạn về phía kẻ bắn`,`+35 armor · move speed −5% · Bulwark reflects projectiles back at the shooter`]],
+ w:[['Chùy & Khiên',`Combo 2 đòn, quạt 90°, tầm 2.2 ô, đòn cuối đẩy lùi. Đòn nặng: Shield Bash ×2.2, choáng 0.8s.`,`2-hit combo, 90° arc, 2.2 tiles, finisher knocks back. Heavy: Shield Bash ×2.2, 0.8s stun.`],['Giáo',`Đâm thẳng dài 3.6 ô xuyên mọi địch, combo 3 đòn (đòn 3 quét quạt). Đòn nặng: lao đâm 5 ô.`,`Straight 3.6-tile thrust piercing every enemy, 3-hit combo (3rd sweeps in an arc). Heavy: 5-tile lunge.`],['Chuông Tang',`Mỗi Parry hoặc đòn chặn bằng Bulwark tích 1 Âm (tối đa 5). Đòn nặng: Xả Âm — sóng r=3.5 ô, sát thương tăng theo số Âm.`,`Each Parry or Bulwark block stacks 1 Toll (max 5). Heavy: Release Toll — a 3.5-tile wave, damage scales with Toll.`]]}
+};
+let CIF='menu';
+const lvl=k=>{try{return ML(k)|0||1}catch(e){return 1}};
+// ---- Trang hướng dẫn mở rộng: Cách chơi · Nguyên tố · Phòng & vật phẩm (số liệu đối chiếu với code) ----
+const GA='#ffc247';
+const kk=s=>`<span class=k>${s}</span>`;
+const cd=(t,r,b,ac)=>`<div class=cic style="--ac:${ac||GA}"><b><span>${t}</span>${r?`<em>${r}</em>`:''}</b><div>${b}</div></div>`;
+const SEC=[['cls','⚔️',['Class','Classes']],['how','📖',['Cách chơi','How to play']],['elem','🔥',['Nguyên tố','Elements']],['world','🗺️',['Phòng & đồ','Rooms & items']]];
+const secOf=k=>CLS[k]?'cls':k;
+const nav=k=>`<div class=cs>${SEC.map(s=>`<button class="b${secOf(k)==s[0]?' sel':''}" onclick="clsinfo('${s[0]=='cls'?(CLS[k]?k:curCL()):s[0]}')"><span class=ic>${s[1]}</span>${T(s[2][0],s[2][1])}</button>`).join('')}</div>`;
+
+function pgHow(){
+ return `<div class=cin>🎯 ${T('<b>Mục tiêu:</b> vượt 5 biome rồi hạ <b>Vua Tro</b> ở Trái Tim Tro. Mỗi biome là một chuỗi phòng đi một chiều (không quay lại): gần cuối có <b>Lửa Trại</b>, cuối cùng là <b>boss</b>. Chết là mất run, nhưng Tàn Hồn, Mastery và đồ đã mở vẫn được giữ.','<b>Goal:</b> clear 5 biomes, then beat the <b>Ash King</b> in the Heart of Ash. Each biome is a one-way chain of rooms (no going back): a <b>Campfire</b> near the end, a <b>boss</b> last. Dying ends the run, but Soul Embers, Mastery and unlocks are kept.')}</div>
+<h3>${T('Điều khiển','Controls')}</h3>
+${cd('📱 '+T('Cảm ứng','Touch'),'',T(`Kéo ngón cái trái để di chuyển. ${kk('A')} đánh (giữ để đánh liên tục) · ${kk('H')} giữ khoảng 0.6s rồi thả = đòn nặng ×2.2 (thả sớm thì huỷ) · ${kk('D')} né · ${kk('Q')} ${kk('E')} kỹ năng class · ${kk('R')} Ember Surge · ${kk('F')} Ember Flask. Hai nút vật phẩm nằm dọc mép phải, phía trên.`,`Drag the left thumb to move. ${kk('A')} attack (hold to repeat) · ${kk('H')} hold ~0.6s then release = heavy attack ×2.2 (release early to cancel) · ${kk('D')} dash · ${kk('Q')} ${kk('E')} class skills · ${kk('R')} Ember Surge · ${kk('F')} Ember Flask. The two item buttons sit along the right edge, near the top.`))}
+${cd('⌨️ '+T('Bàn phím','Keyboard'),'',T(`WASD di chuyển · ${kk('J')} đánh · ${kk('U')} đòn nặng (giữ rồi thả) · ${kk('Space')} hoặc ${kk('Shift')} né · ${kk('K')} = Q · ${kk('L')} = E · ${kk('R')} Surge · ${kk('F')} Flask · ${kk('1')} ${kk('2')} vật phẩm. Đổi phím trong Cài đặt.`,`WASD to move · ${kk('J')} attack · ${kk('U')} heavy (hold, then release) · ${kk('Space')} or ${kk('Shift')} dash · ${kk('K')} = Q · ${kk('L')} = E · ${kk('R')} Surge · ${kk('F')} Flask · ${kk('1')} ${kk('2')} items. Rebind keys in Settings.`))}
+${cd('🎮 '+T('Tay cầm','Gamepad'),'',T('Cần trái di chuyển · A né · X / Y = Q / E · RT đánh · RB đòn nặng · LB Surge · D-pad ↑ Flask · Start tạm dừng.','Left stick to move · A dash · X / Y = Q / E · RT attack · RB heavy · LB Surge · D-pad ↑ Flask · Start to pause.'))}
+<h3>${T('Chiến đấu','Combat')}</h3>
+${cd(kk('D')+'Dash',T('2 lần, hồi dần','2 charges, recharging'),T('Lao nhanh, bất tử trong phần lớn lúc lao. Có 2 lần Dash, hồi dần theo thời gian (relic Bước Chớp +1 lần). Né đúng khoảnh khắc đòn sắp trúng là <b>Perfect Dodge</b>: +8% Ember Surge.','A fast dash, invulnerable for most of the movement. You have 2 charges that recharge over time (the Lightning Step relic adds 1). Dashing at the exact moment a hit would land is a <b>Perfect Dodge</b>: +8% Ember Surge.'))}
+${cd('🟥🟨🟪 '+T('Báo hiệu đòn địch','Enemy telegraphs'),'',T('<b>ĐỎ</b> = né hoặc chặn được · <b>VÀNG</b> = Parry được (Ashblade / Ironwarden bấm E đúng lúc) · <b>TÍM</b> = không chặn được, bắt buộc né.','<b>RED</b> = dodge or block · <b>YELLOW</b> = can be parried (Ashblade / Ironwarden press E on time) · <b>PURPLE</b> = cannot be blocked, you must dodge.'))}
+${cd('💥 '+T('Thế (làm địch choáng)','Poise (stunning enemies)'),'',T('Mỗi đòn trúng làm giảm thanh Thế của địch thường; hết Thế → địch choáng 2s. Đòn trúng cũng ngắt đòn đang báo hiệu. Đòn nặng và relic Nắm Đấm Choáng (+50%) làm vỡ Thế nhanh hơn. Boss không bị vỡ Thế.','Every hit drains a normal enemy’s Poise bar; when it empties the enemy is stunned for 2s. A hit also interrupts an attack that is winding up. Heavy attacks and the Stunning Fist relic (+50%) break Poise faster. Bosses cannot be poise-broken.'))}
+<h3>${T('Kỹ năng dùng chung mọi class','Skills shared by every class')}</h3>
+${cd(kk('R')+'Ember Surge',T('thanh vàng dưới thanh máu','gold bar under your HP'),T('<b>Nạp:</b> gây sát thương (cứ 40 sát thương = 1%), Parry +10%, Perfect Dodge +8%, Đền Lửa đầy ngay. <b>Bấm R khi đủ 100%:</b> nổ quanh người (bán kính ~3 ô, ×2.5 sát thương) và buff 8s: +25% sát thương, +20% tốc đánh, hồi chiêu Q/E nhanh gấp đôi. Xả xong thanh về 0.','<b>Charge:</b> dealing damage (every 40 damage = 1%), Parry +10%, Perfect Dodge +8%, Shrine of Fire fills it instantly. <b>Press R at 100%:</b> a blast around you (~3-tile radius, ×2.5 damage) plus an 8s buff: +25% damage, +20% attack speed, Q/E cooldowns tick twice as fast. The bar resets to 0.'))}
+${cd(kk('F')+'Ember Flask',T('bình hồi máu','healing flask'),T('Hồi 35% máu tối đa trong khoảng 0.8s (hồi dần). Có 2 bình mỗi run (độ khó cao: chỉ 1). Không dùng được khi đầy máu. Bước vào Lửa Trại sẽ nạp đầy lại.','Restores 35% of max HP over about 0.8s. You carry 2 flasks per run (high difficulty: only 1). Cannot be used at full HP. Entering a Campfire refills it.'))}
+<h3>Mastery</h3>
+${cd('⭐ '+T('Lên cấp riêng cho từng class','Levels per class'),'',T('Nhận XP: <b>+1</b> mỗi phòng đã qua · <b>+20</b> khi hạ boss · <b>+50</b> khi thắng run (<b>+100</b> thêm ở lần thắng đầu tiên bằng class đó). Mastery mở Aspect (Lv 4 / 8 / 12) và vũ khí (Lv 3 / 10) — xem trang Class.','XP: <b>+1</b> per room cleared · <b>+20</b> for killing a boss · <b>+50</b> for winning a run (<b>+100</b> extra on your first win with that class). Mastery unlocks Aspects (Lv 4 / 8 / 12) and weapons (Lv 3 / 10) — see the Class page.'))}`;
+}
+
+function pgElem(){
+ return `<div class=cin>${T('Mỗi đòn trúng có <b>14%</b> cơ hội gây trạng thái nguyên tố của class: <b>Ashblade & Cinder Mage → Burn 🔥</b> · <b>Shadow Archer → Poison ☠</b> · <b>Ironwarden → Shock ⚡</b>. Biểu tượng và số chồng hiện trên đầu địch. Trạng thái kéo dài 3s (boss 1.5s), trúng thêm sẽ làm mới giờ; hết giờ thì mọi chồng biến mất cùng lúc. Relic <b>Lửa Bám</b> tăng thêm 15% cơ hội và cho Burn chồng tới 4.','Every hit has a <b>14%</b> chance to apply your class element: <b>Ashblade & Cinder Mage → Burn 🔥</b> · <b>Shadow Archer → Poison ☠</b> · <b>Ironwarden → Shock ⚡</b>. Icons and stack counts show above enemies. A status lasts 3s (boss 1.5s) and each new application refreshes the timer; when it runs out every stack disappears at once. The <b>Clinging Flame</b> relic adds +15% chance and lets Burn stack to 4.')}</div>
+<h3>${T('Trạng thái','Statuses')}</h3>
+${cd('🔥 Burn',T('tối đa 3 chồng','max 3 stacks'),T('Cứ 0.5s gây sát thương bằng 12% sát thương của đòn gây ra × số chồng.','Every 0.5s deals 12% of the applying hit’s damage × stacks.'),'#ff7a2e')}
+${cd('☠ Poison',T('tối đa 10 chồng','max 10 stacks'),T('Cứ 0.5s gây 10% × số chồng. Chồng càng cao càng đau.','Every 0.5s deals 10% × stacks. High stacks hurt a lot.'),'#8be04e')}
+${cd('🩸 Bleed',T('tối đa 5 chồng','max 5 stacks'),T('Cứ 0.5s gây 20% × số chồng, <b>×2 nếu mục tiêu đang di chuyển</b>. Nguồn: đòn chí mạng của Ashblade khi cầm Song Đao Than.','Every 0.5s deals 20% × stacks, <b>×2 if the target is moving</b>. Source: Ashblade crits while wielding the Twin Cinder Blades.'),'#d8402e')}
+${cd('❄ Chill',T('tối đa 3 chồng','max 3 stacks'),T('Mỗi chồng làm địch chậm di chuyển khoảng 20%. Đủ 3 chồng → <b>Đóng băng</b>: choáng 1.5s. Nguồn: Frost Nova của Cinder Mage (2 chồng cho mọi địch trong 4 ô).','Each stack slows enemy movement by about 20%. At 3 stacks → <b>Freeze</b>: stunned for 1.5s. Source: Cinder Mage’s Frost Nova (2 stacks to every enemy within 4 tiles).'),'#7fd8ff')}
+${cd('⚡ Shock',T('1 chồng','1 stack'),T('Không gây sát thương riêng. (Relic Rune Điện: 35% gây Sốc, đòn lan 30% sang 2 địch gần.)','Deals no damage by itself. (Volt Rune relic: 35% to Shock, hits chain 30% to 2 nearby enemies.)'),'#ffe34d')}
+<h3>${T('Phản ứng nguyên tố','Elemental reaction')}</h3>
+${cd('♨ '+T('Hơi Nước','Steam'),'Burn + Chill',T('Khi một địch vừa có Burn vừa có Chill: nổ hơi nước bán kính ~3 ô, gây 80% sát thương của đòn gây ra cho mọi địch quanh đó và tiêu hết cả Burn lẫn Chill. Mỗi địch chỉ phản ứng 1 lần mỗi 3s. <b>Cinder Mage</b> làm được dễ nhất: Frost Nova đặt Chill, đòn lửa đặt Burn.','When one enemy has both Burn and Chill: a steam blast (~3-tile radius) deals 80% of the applying hit’s damage to everything nearby and consumes both statuses. Each enemy can react once every 3s. <b>Cinder Mage</b> does it best: Frost Nova applies Chill, fire attacks apply Burn.'),'#cfeaff')}
+<h3>${T('Boss','Bosses')}</h3>
+<div class=cin>${T('Trạng thái lên boss chỉ kéo dài 1.5s, sát thương theo thời gian chỉ bằng một nửa, và Chill tối đa 1 chồng (không đóng băng được).','Statuses on bosses last only 1.5s, damage over time is halved, and Chill caps at 1 stack (bosses cannot be frozen).')}</div>`;
+}
+
+function pgWorld(){
+ const BIO=[['Nghĩa Địa Tro','Ash Graveyard','Gorrak, Xương Vương','Gorrak, Bone King'],['Rừng Nấm Độc','Toxic Mushroom Forest','Mycelia, Mẹ Nấm','Mycelia, Mother of Fungi'],['Thành Chìm','Sunken City','Vael, Kỵ Sĩ Chìm','Vael, the Sunken Knight'],['Lò Rèn Rực Lửa','Blazing Forge','Ignar, Thợ Rèn Vô Tận','Ignar, the Endless Smith'],['Thánh Đường Lặng','Silent Cathedral','Seraphine, Nữ Tế','Seraphine, the Priestess'],['Trái Tim Tro','Heart of Ash','Vua Tro','Ash King']];
+ const CON=[['💣','Bom Tro','Ash Bomb',35,'Nổ bán kính 2.5 ô, gây Bỏng','Explodes in a 2.5-tile radius, inflicts Burn'],['🧪','Thuốc Bổ','Tonic',35,'Hồi 30% máu trong 3s','Heals 30% HP over 3s'],['🛡️','Kết Giới','Ward',40,'Giáp ảo bằng 25% máu, 8s','Barrier worth 25% HP, 8s'],['⚡','Adrenalin','Adrenaline',40,'+30% tốc đánh & chạy trong 8s','+30% attack & move speed for 8s'],['❄️','Lọ Băng','Frost Vial',45,'Đóng băng địch quanh bạn (boss: 1 Chill)','Freezes nearby enemies (boss: 1 Chill)'],['🌀','Cuộn Dịch Chuyển','Teleport Scroll',40,'Dịch chuyển 8 ô, bất tử ngắn','Teleport 8 tiles, brief invulnerability'],['🪶','Lông Phượng','Phoenix Feather',70,'Tự hồi sinh 25% máu khi bạn gục','Auto-revive with 25% HP when you fall'],['🌫️','Khói Mù','Smoke Bomb',30,'Mây 6s: địch trong mây lạc hướng','6s cloud: enemies inside lose track of you'],['🎭','Mồi Nhử','Decoy',30,'Mồi 6s: địch thường đuổi theo mồi','6s decoy: normal enemies chase it'],['🪞','Mảnh Gương','Mirror Shard',45,'6s phản 3 đạn của địch','6s: reflects 3 enemy projectiles']];
+ const CUR=[['Yếu Ớt','Frail','−15% máu tối đa','−15% max HP'],['Chậm Chạp','Sluggish','−10% tốc chạy','−10% move speed'],['Giòn Giáp','Brittle Armor','−20 giáp','−20 armor'],['Nghèo Túng','Poverty','−25% vàng nhận','−25% gold gained'],['Nặng Nề','Heavy','Hồi Dash +25%','Dash recharge +25%'],['Địch Hăng Say','Eager Enemies','Địch +10% tốc độ','Enemies +10% speed'],['Lì Lợm','Stubborn','Địch +15% máu','Enemies +15% HP'],['Cạn Lửa','Drained Flame','Flask −1 bình tối đa','Flask −1 max charge']];
+ return `<h3>${T('5 biome + Trái Tim Tro','5 biomes + the Heart of Ash')}</h3>
+<div class=cin>${BIO.map((b,i)=>`<b>${i<5?(i+1)+'.':'★'}</b> ${T(b[0],b[1])} — ${T(b[2],b[3])}`).join('<br>')}</div>
+<h3>${T('Các loại phòng','Room types')}</h3>
+${cd('⚔️ '+T('Phòng chiến đấu','Combat room'),'',T('Diệt hết địch để mở cửa phía Đông. Mỗi cửa hiện icon phần thưởng của phòng đó, hãy chọn theo nhu cầu.','Kill every enemy to open the east door. Each door shows the reward icon of the room behind it, so pick what you need.'))}
+${cd('☠ Elite · Boss','',T('Elite khó hơn, luôn thưởng relic. Boss mạnh hơn hẳn địch thường; hạ boss là sang biome tiếp theo.','Elites are tougher and always reward a relic. Bosses hit much harder than normal enemies; beating one moves you to the next biome.'))}
+${cd('▣ '+T('Rương','Treasure chest'),'',T('Phòng thưởng thêm, không phải biome nào cũng có. Coi chừng rương Mimic (rương cắn trả đòn) và rương Nguyền (đồ mạnh kèm lời nguyền).','A bonus room that not every biome has. Beware the Mimic (a chest that bites back) and the Cursed chest (strong loot with a curse).'))}
+${cd('$ Shop','',T('Bán 2 vật phẩm và vài relic bằng vàng.','Sells 2 consumables and a few relics for gold.'))}
+${cd('? '+T('Đền / Sự kiện','Shrine / Event'),'',T('Mỗi phòng ? là một Đền hoặc một Sự kiện, mỗi cái chỉ gặp một lần trong run. Đọc kỹ cái giá ghi trên nút trước khi chọn. Ví dụ: Đền Máu (trả 20% máu hiện tại → vàng) · Đền May Mắn (+1 lựa chọn relic hết biome) · Đền Lửa (Surge đầy ngay) · Gương Nguyền (+1 lời nguyền, nhận 2 relic).','Each ? room is a Shrine or an Event, and each can appear only once per run. Read the price on each button before choosing. Examples: Shrine of Blood (pay 20% current HP → gold) · Shrine of Luck (+1 relic choice for the biome) · Shrine of Fire (Surge full at once) · Cursed Mirror (+1 curse, get 2 relics).'))}
+${cd('♨ '+T('Lửa Trại','Campfire'),T('1 phòng gần cuối biome','one room near the biome’s end'),T('Hồi 40% máu (Heat cao hồi ít hơn) và nạp đầy Ember Flask. Bấm ❚❚ Tạm dừng để: <b>nâng hạng vũ khí</b> (◈60 × hạng kế tiếp, mỗi Lửa Trại 1 lần, tối đa Hạng 4) hoặc <b>thanh tẩy 1 lời nguyền</b> (◈50). Nếu đã học công thức ở Hub và có đủ 2 relic nguyên liệu, bạn có thể Tiến Hóa relic tại đây.','Heals 40% HP (less at high Heat) and refills the Ember Flask. Tap ❚❚ Pause to: <b>upgrade your weapon rank</b> (◈60 × next rank, once per Campfire, max Rank 4) or <b>purify 1 curse</b> (◈50). If you learned a recipe at the Hub and hold both ingredient relics, you can Evolve relics here.'))}
+<h3>${T('Phần thưởng sau phòng chiến đấu','Rewards after a combat room')}</h3>
+<div class=cin>✦ <b>Relic</b> ${T('(20%) chọn 1 trong 3, nhặt trùng sẽ cộng dồn','(20%) pick 1 of 3, duplicates stack')}<br>◈ <b>${T('Vàng','Gold')}</b> ${T('(30%) 25 + 8 × số biome','(30%) 25 + 8 × biome number')}<br>⚒ <b>${T('Đá Mài','Whetstone')}</b> ${T('(15%) +1 Hạng vũ khí, mỗi Hạng +6% sát thương, tối đa Hạng 4','(15%) +1 weapon rank, each rank +6% damage, max Rank 4')}<br>✚ <b>${T('Vật phẩm','Item')}</b> ${T('(15%) 1 vật phẩm tiêu hao; đầy 2 ô thì nhận 25 vàng','(15%) 1 consumable; if both slots are full you get 25 gold')}<br>♥ <b>${T('Hồi','Heal')}</b> ${T('(15%) hồi 30% máu tối đa','(15%) restores 30% max HP')}<br>? <b>${T('Bí ẩn','Mystery')}</b> ${T('(5%) ngẫu nhiên một trong các loại trên','(5%) a random one of the above')}</div>
+<h3>${T('Vật phẩm tiêu hao','Consumables')} · ${T('tối đa 2 ô, dùng bằng 2 nút bên phải (phím 1 / 2)','2 slots, use the two right-side buttons (keys 1 / 2)')}</h3>
+<div class=cin>${CON.map(c=>`${c[0]} <b>${T(c[1],c[2])}</b> ◈${c[3]} — ${T(c[4],c[5])}`).join('<br>')}</div>
+<h3>${T('Lời nguyền','Curses')}</h3>
+<div class=cin>${CUR.map(c=>`☠ <b>${T(c[0],c[1])}</b> — ${T(c[2],c[3])}`).join('<br>')}<br>${T('Gỡ bằng cách thanh tẩy ở Lửa Trại (◈50 mỗi lời nguyền).','Remove them by purifying at a Campfire (◈50 per curse).')}</div>
+<h3>${T('Độ khó','Difficulty')}</h3>
+<div class=cin>🕊 <b>${T('Hòa Bình','Peace')}</b> — ${T('địch −30% sát thương, báo hiệu lâu hơn 20%','enemies −30% damage, telegraphs 20% longer')}<br>⚔ <b>${T('Bình Thường','Normal')}</b><br>🔥 <b>${T('Khó','Hard')}</b> — ${T('địch +15% máu và sát thương, Flask −1','enemies +15% HP and damage, Flask −1')}<br>💀 <b>Hardcore</b> — ${T('thoát hoặc chết là mất run, +25% Tàn Hồn','quit or die and the run is lost, +25% Soul Embers')}<br>${T('<b>Heat</b> (màn Chuẩn bị) thêm từng luật khó cộng dồn để đổi lấy thêm Tàn Hồn.','<b>Heat</b> (prep screen) stacks extra rules in exchange for more Soul Embers.')}</div>`;
+}
+const PG={how:pgHow,elem:pgElem,world:pgWorld};
+
+function render(k){
+ const c=CLS[k],ac=AC[k],idx=KS.indexOf(k),lv=lvl(k);let as=0,wi=0;
+ try{as=S.x.as[idx]|0}catch(e){}try{wi=S.w[k]|0}catch(e){}
+ const lock=need=>'🔒 Mastery '+need;
+ const skill=(key,s,cd)=>`<div class=cic style="--ac:${ac}"><b><span><span class=k>${key}</span>${s.n}</span><em>${cd?T('Hồi chiêu ','Cooldown ')+cd+'s':T('Nội tại','Passive')}</em></b><div>${T(s.v,s.e)}</div></div>`;
+ const asp=c.as.map((a,i)=>{const ok=lv>=UA[i];return `<div class="cic${ok?'':' lk'}" style="--ac:${ac}"><b><span><span class=k>${i+1}</span>${a[0]}</span><em>${ok?(as==i+1?'● '+T('đang chọn','selected'):'✔ '+T('đã mở','unlocked')):lock(UA[i])}</em></b><div>${T(a[1],a[2])}</div></div>`}).join('');
+ const wp=c.w.map((w,i)=>{const ok=lvl(k)>=UW[i],tier=i==0?T('Mặc định','Default'):i==1?'Rare':'Legend';return `<div class="cic${ok?'':' lk'}" style="--ac:${ac}"><b><span>${w[0]}</span><em>${ok?(wi==i?'● '+T('đang dùng','equipped'):tier):lock(UW[i])+' · '+tier}</em></b><div>${T(w[1],w[2])}</div></div>`}).join('');
+ const tabs=KS.map(x=>`<button class="b${x==k?' sel':''}" style="--ac:${AC[x]}" onclick="clsinfo('${x}')"><span class=ic>${CLS[x].ic}</span>${CLS[x].n}</button>`).join('');
+ return `<div class=bkb><button class=b onclick="ciback()">← ${T('Quay lại','Back')}</button><h1>${T('Hướng dẫn','Guide')}</h1></div>
+<div class=ci>
+${nav(k)}<div class=ct>${tabs}</div>
+<div class=cih style="--ac:${ac}"><h2>${c.n} — ${T(c.role[0],c.role[1])}</h2><i>“${T(c.tag[0],c.tag[1])}”</i>
+<div class=chips><span>❤ HP <b>${c.hp}</b></span><span>🛡 ${T('Giáp','Armor')} <b>${c.ar}</b></span><span>👟 ${T('Tốc chạy','Speed')} <b>${c.sp}</b></span><span>${c.pr?'✔ '+T('Có Parry (E)','Has Parry (E)'):'✖ '+T('Không có Parry','No Parry')}</span><span>⭐ Mastery <b>Lv${lv}</b></span></div></div>
+<div class=cin>💡 ${T(c.tip[0],c.tip[1])}</div>
+<h3>${T('Kỹ năng','Skills')}</h3>${skill('Q',c.q,c.q.cd)}${skill('E',c.e,c.e.cd)}${skill('★',c.p,0)}
+<h3>Aspect · ${T('mở bằng Mastery 4 / 8 / 12, chọn 1 mỗi run ở màn Chuẩn bị','unlocked at Mastery 4 / 8 / 12, pick 1 per run on the prep screen')}</h3>${asp}
+<h3>${T('Vũ khí','Weapons')} · ${T('mở bằng Mastery 3 / 10','unlocked at Mastery 3 / 10')}</h3>${wp}
+<h3>${T('Dùng chung mọi class','Shared by every class')}</h3>
+${cd(kk('R')+'Ember Surge',T('khi thanh đầy 100%','at 100%'),T('Nạp bằng sát thương gây ra, Parry và Perfect Dodge. Xả: nổ quanh người ×2.5 và buff 8s (+25% sát thương, +20% tốc đánh, hồi chiêu Q/E nhanh gấp đôi).','Charged by damage dealt, Parries and Perfect Dodges. Release: a ×2.5 blast around you plus an 8s buff (+25% damage, +20% attack speed, Q/E cooldowns tick twice as fast).'),ac)}
+${cd(kk('F')+'Ember Flask',T('hồi 35% máu','heals 35% HP'),T('2 bình mỗi run, nạp đầy ở Lửa Trại.','2 flasks per run, refilled at Campfires.'),ac)}
+<div class=cin>${T('Màu báo hiệu đòn địch: <b>ĐỎ</b> = né hoặc chặn · <b>VÀNG</b> = Parry được · <b>TÍM</b> = bắt buộc né.','Enemy telegraph colors: <b>RED</b> = dodge or block · <b>YELLOW</b> = can be parried · <b>PURPLE</b> = must dodge.')}</div>
+<button class="b cib" style="--ac:#ffc247" onclick="clsinfo('how')">📖 ${T('Xem Cách chơi đầy đủ','Open the full How to play')}</button>
+</div>`;
+}
+window.clsinfo=function(k,from){if(from)CIF=from;if(!CLS[k]&&!PG[k])k='a';const o=document.getElementById('ov');if(!o)return;o.innerHTML=CLS[k]?render(k):`<div class=bkb><button class=b onclick="ciback()">← ${T('Quay lại','Back')}</button><h1>${T('Hướng dẫn','Guide')}</h1></div><div class=ci>${nav(k)}${PG[k]()}</div>`;o.style.display='flex';o.scrollTop=0};
+window.ciback=function(){const f=CIF;CIF='menu';try{if(f=='pause'&&G&&G.st=='pause'){G.st='play';pause();return}if(f=='codex'){cdx();return}}catch(e){}menu()};
+const cib=(k,from,label)=>`<button class="b cib" style="--ac:${AC[k]}" onclick="clsinfo('${k}','${from}')">ℹ️ ${label}</button>`;
+const curCL=()=>{try{return CLS[CL]?CL:'a'}catch(e){return 'a'}};
+
+// 1) Màn Chuẩn bị: tên Q/E/nội tại ngay dưới mô tả class + nút mở chi tiết
+try{const _mn=menu;menu=function(){_mn.apply(this,arguments);try{const col=document.querySelector('#ov .prep .pc');if(!col||col.querySelector('.cib'))return;const k=curCL(),c=CLS[k],ac=AC[k];
+ const d=col.querySelector('.cd');if(d)d.insertAdjacentHTML('beforeend',`<br><b style="color:${ac}">Q</b> ${c.q.n} · <b style="color:${ac}">E</b> ${c.e.n} · <b style="color:${ac}">★</b> ${c.p.n}`);
+ col.insertAdjacentHTML('beforeend',cib(k,'menu',T('Chi tiết kỹ năng & vũ khí','Skills & weapons detail')))}catch(e){console.error('ci-menu',e)}}}catch(e){console.error('ci-menu',e)}
+
+// 2) Codex: thêm mục Class, kỹ năng & vũ khí
+try{const _cx=window.cdx;window.cdx=function(){_cx.apply(this,arguments);try{const o=document.getElementById('ov'),d=o&&o.querySelector(':scope>div:not(.bkb)');if(!d||d.querySelector('.cib'))return;d.insertAdjacentHTML('afterbegin',cib(curCL(),'codex',T('Hướng dẫn: class, nguyên tố, vật phẩm','Guide: classes, elements, items')))}catch(e){console.error('ci-cdx',e)}}}catch(e){console.error('ci-cdx',e)}
+
+// 3) Menu Tạm dừng: xem lại kỹ năng của class đang chơi
+try{const _pz=pause;pause=function(){_pz.apply(this,arguments);try{if(!G||G.st!='pause')return;const o=document.getElementById('ov');if(!o||o.querySelector('.cib')||!CLS[G.cl])return;
+ const t=document.createElement('div');t.innerHTML=cib(G.cl,'pause',T('Hướng dẫn & kỹ năng class','Guide & class skills'));const b=t.firstChild,r=o.querySelector('button[onclick="resume()"]');r?r.after(b):o.appendChild(b)}catch(e){console.error('ci-pause',e)}}}catch(e){console.error('ci-pause',e)}
+
+// 4) Đầu run: nhãn truy cập cho Q/E + gợi ý tên kỹ năng (3 run đầu của mỗi class)
+try{const _nr=newRun;newRun=function(){_nr.apply(this,arguments);try{if(!G)return;const k=G.cl,c=CLS[k];if(!c)return;
+ const bq=document.getElementById('bq'),be=document.getElementById('be');if(bq)bq.setAttribute('aria-label','Q — '+c.q.n);if(be)be.setAttribute('aria-label','E — '+c.e.n);
+ let m={};try{m=JSON.parse(localStorage.getItem('ashbound_ci')||'{}')||{}}catch(e){}
+ if((m[k]|0)<3){m[k]=(m[k]|0)+1;try{localStorage.setItem('ashbound_ci',JSON.stringify(m))}catch(e){}hint('Q '+c.q.n+' · E '+c.e.n+' · ★ '+c.p.n,420)}}catch(e){console.error('ci-run',e)}}}catch(e){console.error('ci-run',e)}
+})();
+</script>
+
 </body></html>
