@@ -1562,6 +1562,15 @@ kill=function(e){
     if(window.EVR&&G.ev&&G.ev.includes(3)){P.dc=ST.dc}
   }
 };
+// [GDD §8.3 u08 Hạt Giống Lửa · REL-04] OnKill 25/35/45%: xác nổ r=2t (32px) 80% Raw của đòn gốc (LR), không crit; chuỗi nổ tới depth 2 (wrapper kill chỉ gọi khi RD<2)
+function onKill(e){
+  const s=S(45);if(!s||!(rc()<RLE[45].p[s]))return;
+  const dd=Math.max(1,Math.round((LR||20*ST.atk)*.8));
+  RD++;const c0=CH;CH=1;const cr=ST.cr;ST.cr=-1;
+  try{for(const o of E.slice())if(o!==e&&!o.dead&&hyp(o.x-e.x,o.y-e.y)<32+o.r)_dmg(o,dd,Math.atan2(o.y-e.y,o.x-e.x),2,2,0)}
+  finally{RD--;CH=c0;ST.cr=cr}
+  pt(e.x,e.y,'#ff7a2e',14);snd(120,500,.2,'sawtooth',.08);G.sk=Math.max(G.sk,4)
+}
 function onHit(e,raw){
   let s=S(38);if(s&&!(G.t<(e.i38|0))&&rc()<RLE[38].p[s]){e.i38=G.t+6;const cap=(G.rl[16]|0)>0?15:10;e.pn=Math.min(cap,(e.pn|0)+1);e.pt=e.k=='B'?150:300;e.pd=Math.max(e.pd|0,Math.max(1,Math.round(raw*.05)));pt(e.x,e.y,'#9be36b',5)}
   s=S(43);if(s&&!(G.t<(e.i43|0))&&rc()<RLE[43].p[s]){e.i43=G.t+6;e.ch=Math.min(3,(e.ch|0)+1);e.ct=e.k=='B'?120:240;pt(e.x,e.y,'#7fd8ff',4)}
