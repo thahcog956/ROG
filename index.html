@@ -464,7 +464,7 @@ window.trRl=d=>{if(!(G&&G.tr&&G.st=='play'))return;const i=+$('#trs').value;G.rl
 window.cdx=function(){const nb=S.x.cb;ov(`<h1>Codex</h1><div style="max-width:420px;font-size:12px;text-align:left"><h2>Kẻ địch ${[...NMS].filter(k=>S.x.ce.includes(k)).length}/${NMS.length}</h2>${[...NMS].map(k=>S.x.ce.includes(k)?`<p><b>${CN[k][0]}</b> — ${CN[k][1]}</p>`:'<p style="opacity:.4">??? — chưa gặp</p>').join('')}<h2>Relic ${S.x.cr.length}/${RL.length}</h2>${RL.map((r,i)=>S.x.cr.includes(i)?`<p><b>${r[0]}</b> — ${r[1]}</p>`:'<p style="opacity:.4">??? — chưa gặp</p>').join('')}<h2>Boss ${BOSS.filter((b,i)=>nb>>i&1).length}/${BOSS.length}</h2>${BOSS.map((b,i)=>nb>>i&1?`<p><b style="color:${b[1]}">${b[0]}</b></p>`:'<p style="opacity:.4">???</p>').join('')}</div><button class=b onclick=menu()>Quay lại</button>`)}}
 {const X='Nhẫn Tro|+8% ST|power|atk|.08;Đá Lửa|+6% ST|fire|atk|.06;Băng Vụn|+6% ST|frost|atk|.06;Mảnh Sét|+6% ST|volt|atk|.06;Bào Tử Khô|+6% ST|venom|atk|.06;Mảnh Hư Không Nhỏ|+6% ST|void|atk|.06;Đồng Hồ Cát Nứt|Hồi Dash nhanh hơn 6%|skill|dr|.06;Vòng Nổ|+6% ST|aoe|atk|.06;Nam Châm Vàng|+8% vàng nhận|economy|gd|.08;Khiên Gỗ|+6 giáp|defense|ar|6;Răng Độc|+8% tốc đánh|venom|as|.08;Lưỡi Lửa|+5% tốc chạy|fire|ms|.05;Găng Sấm|+8% tốc đánh|volt|as|.08;Mắt Kẻ Săn|+4% chí mạng|crit|cr|.04;Xương Hộ Vệ|+10 giáp|defense|ar|10;Kim Cương Băng|+8% tốc đánh|frost|as|.08;Giọt Máu|+6% sát thương chí mạng|crit|cd|.06;Hạt Giống Lửa|+8% ST|fire|atk|.08;Chiếc Còi Bạc|+5% tốc chạy|dash|ms|.05;Phản Xạ|+8 giáp|parry|ar|8;Nhẫn Hút|Hồi 0.3 máu/giây|vitality|rg|.3;Đèn Lồng Hư Không|+8% ST|void|atk|.08;Cuộn Lệnh|Hồi Dash nhanh hơn 8%|skill|dr|.08;Ống Hít Tro|+12% vàng nhận|economy|gd|.12;Sợi Chỉ Số Phận|+10% vàng nhận|economy|gd|.1;Chuông Lặng|+8% ST|parry|atk|.08;Vòng Sương|+8% ST|frost|atk|.08;Kim Đồng Hồ Vỡ|Hồi Dash nhanh hơn 15%|dash|dr|.15;Lò Than Sống|+10% ST|fire|atk|.1;Mạng Nhện Sét|+10% ST|volt|atk|.1;Áo Choàng Gió|+12% tốc đánh|dash|as|.12;Bia Đá Thề|+15 giáp|defense|ar|15'.split(';').map(s=>s.split('|'));
 X.forEach(x=>{RL.push([x[0],x[1]]);TG.push(x[2])});
-const _rc4=recalc;recalc=function(){_rc4();X.forEach((x,j)=>{const r=G.rl[28+j]|0;if(!r)return;const v=+x[4]*r,k=x[3];if(k=='atk')ST.atk*=1+v;else if(k=='gd')ST.gd*=1+v;else if(k=='dr')ST.dr*=1-v;else ST[k]+=v});
+const _rc4=recalc;recalc=function(){_rc4();X.forEach((x,j)=>{const r=G.rl[28+j]|0;if(!r||(window.RLE&&RLE[28+j]))return;const v=+x[4]*r,k=x[3];if(k=='atk')ST.atk*=1+v;else if(k=='gd')ST.gd*=1+v;else if(k=='dr')ST.dr*=1-v;else ST[k]+=v});
 const c={};for(const k in G.rl)if(G.rl[k]>0&&TG[k])c[TG[k]]=(c[TG[k]]||0)+1;
 for(const t of['fire','frost','volt','venom','void','melee','projectile','aoe']){const n=c[t]|0;if(n>=3)ST.atk*=1.05;if(n>=5)ST.atk*=1.05}
 if((c.skill|0)>=3)ST.dr*=.9;if((c.parry|0)>=3)ST.ar+=10;ST.dr=Math.max(20,ST.dr)};
@@ -1513,6 +1513,71 @@ try{const _nr=newRun;newRun=function(){_nr.apply(this,arguments);try{if(!G)retur
 })();
 
 ;try{const LT=f=>function(){const t=G&&G.lt,o=t&&G.rn;if(t)G.rn=t;try{return f.apply(this,arguments)}finally{if(t&&G.rn===t)G.rn=o}};for(const n of['reward','rr','shop','shrine','deal','pop','gamb'])if(typeof window[n]=='function')window[n]=LT(window[n])}catch(e){console.error(e)}
+</script>
+
+<script>
+/* Relic Event Bus v1 — OnHit / OnKill / OnDash / OnSkill (REL-04: depth chống vòng lặp, ICD 6f số, không alloc chuỗi).
+   Data-driven: thêm relic trigger = thêm 1 dòng vào RLE (key = chỉ số trong G.rl). */
+;try{(()=>{
+const RLE=window.RLE={
+ 38:{tr:'hit',  p:[0,.15,.22,.30],d:'Đòn trúng: 15/22/30% gây 1 Độc'},
+ 45:{tr:'kill', p:[0,.25,.35,.45],d:'Diệt địch: 25/35/45% nổ 80% ST (r=2t)'},
+ 46:{tr:'dash', p:[0,.15,.20,.25],d:'Né: +15/20/25% ST trong 2s (làm mới)'},
+ 50:{tr:'skill',p:[0,.20,.30,.40],d:'Dùng kỹ năng: +20/30/40% ST trong 4s'}
+};
+for(const k in RLE)if(RL[k])RL[k][1]=RLE[k].d;
+const S=i=>Math.min(3,(G&&G.rl&&G.rl[i])|0);
+let RD=0,LR=0,pd=0,pq=0;           // RD: độ sâu proc · LR: Raw đòn gốc · pd/pq: trạng thái dash/skill frame trước
+
+const _dmg=dmgE;
+dmgE=function(e,raw){
+  const top=RD==0&&!CH,h0=e.hp;
+  if(top)LR=raw;
+  _dmg.apply(this,arguments);
+  if(top&&!e.dead&&e.hp<h0&&G&&G.st=='play')onHit(e,raw);
+};
+const _kill=kill;
+kill=function(e){
+  const was=e.dead;_kill.apply(this,arguments);
+  if(!was&&e.dead&&e.k!='B'&&RD<2&&G&&G.st=='play')onKill(e);
+};
+function onHit(e,raw){                      // u01 Răng Độc — ICD 6f/mục tiêu, chỉ tốn ICD khi proc thành công
+  const s=S(38);if(!s||G.t<(e.i38|0)||rc()>=RLE[38].p[s])return;
+  e.i38=G.t+6;e.pn=Math.min(10,(e.pn|0)+1);e.pt=e.k=='B'?150:300;
+  e.pd=Math.max(e.pd|0,Math.max(1,Math.round(raw*.05)));pt(e.x,e.y,'#9be36b',5);
+}
+function onKill(e){                         // u08 Hạt Giống Lửa — nổ 80% Raw đòn gốc, không crit, depth+1
+  const s=S(45);if(!s||rc()>=RLE[45].p[s])return;
+  const d=Math.max(1,Math.round(.8*LR)),cr=ST.cr,c0=CH;
+  RD++;CH=1;ST.cr=-1;
+  try{for(const o of E.slice())if(!o.dead&&o!==e&&hyp(o.x-e.x,o.y-e.y)<32+o.r)dmgE(o,d,Math.atan2(o.y-e.y,o.x-e.x),2,2,0)}
+  finally{RD--;CH=c0;ST.cr=cr}
+  pt(e.x,e.y,'#ff7a2e',16);snd(150,500,.18,'sawtooth',.06);G.sk=Math.max(G.sk,4);vib(8);
+}
+function buff(i,f,fr,col){                  // u09 / u13 — làm mới thời gian, không cộng dồn
+  const s=S(i);if(!s)return;
+  const fresh=!(G[f]>0);G[f]=fr;
+  if(fresh){recalc();pt(P.x,P.y,col,8);num(P.x,P.y-14,'+'+Math.round(RLE[i].p[s]*100)+'%',1);vib(8)}
+}
+const _step=step;
+step=function(){
+  _step.apply(this,arguments);
+  if(!G||!P||G.st!='play')return;
+  const d=P.dash>0,q=P.cdq>0;
+  if(d&&!pd)buff(46,'w9',120,'#cfe8ff');
+  if(q&&!pq)buff(50,'w13',240,'#ffc247');
+  pd=d;pq=q;
+  if(G.w9>0&&--G.w9==0)recalc();
+  if(G.w13>0&&--G.w13==0)recalc();
+};
+const _rc=recalc;                           // lớp ngoài cùng: buff ATK có thời hạn
+recalc=function(){
+  _rc.apply(this,arguments);
+  if(!G||!G.rl)return;
+  if(G.w9>0)ST.atk*=1+RLE[46].p[S(46)];
+  if(G.w13>0)ST.atk*=1+RLE[50].p[S(50)];
+};
+})()}catch(err){console.error('relic-bus',err)}
 </script>
 
 </body></html>
